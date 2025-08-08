@@ -11,3 +11,8 @@ ensuring timely redistribution to underprivileged communities.
 • To facilitate real-time connections between food donors and NGOs/volunteers. 
 • To build awareness about sustainable food practices. 
 • To create a scalable and replicable model for food sharing.
+### Workflow: 
+1. Donor uploads surplus food details. 
+2. NGOs/Volunteers are alerted via the app. 
+3. Collection and distribution take place in a timely and safe manner. 
+4. Tracking and feedback loops ensure transparency and accountability.
