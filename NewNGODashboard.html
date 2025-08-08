@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NGO Dashboard</title>
+    <link href="./Dashboard.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>NGO Dashboard</h1>
+      <div id="ngoProfile"></div>
+      <h2>Available Supplier Donations</h2>
+      <div id="supplierList"></div>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+      // Load NGO profile
+      alert(
+        "The food will be delivered in " +
+          Math.floor(Math.random() * 30 + 1) +
+          " minutes. Thankyou...."
+      );
+      const ngo = JSON.parse(localStorage.getItem("ngoProfile"));
+      if (!ngo) {
+        window.location.href = "NGO.html"; // No profile? Go back
+      } else {
+        document.getElementById("ngoProfile").innerHTML = `
+                <p><strong>Name:</strong> ${ngo.name}</p>
+                <p><strong>People to Serve:</strong> ${ngo.peopleCount}</p>
+                <p><strong>Location:</strong> ${ngo.location}</p>
+            `;
+      }
+
+      // Load supplier donations
+      const suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+      const supplierList = document.getElementById("supplierList");
+
+      if (suppliers.length === 0) {
+        supplierList.innerHTML = "<p>No donations available right now.</p>";
+      } else {
+        suppliers.forEach((supplier) => {
+          const div = document.createElement("div");
+          div.className = "supplier-card";
+          div.innerHTML = `
+                    <p><strong>Donor:</strong> ${supplier.name}</p>
+                    <p><strong>Location:</strong> ${supplier.location}</p>
+                    <p><strong>Food Amount:</strong> ${
+                      supplier.foodAmount
+                    } servings</p>
+                    <p><strong>Details:</strong> ${
+                      supplier.details || "N/A"
+                    }</p>
+                    <hr>
+                `;
+          supplierList.appendChild(div);
+        });
+      }
+
+      function logout() {
+        localStorage.removeItem("ngoProfile");
+        window.location.href = "NGO.html";
+      }
+    </script>
+  </body>
+</html>

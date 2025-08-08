@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supplier Dashboard</title>
+    <link href="./Dashboard.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Share Your Surplus</h1>
+      <p class="quote">
+        "We make a living by what we get, but we make a life by what we give." –
+        Winston Churchill
+      </p>
+
+      <div id="thankYouMessage" class="thank-you">
+        Thank you for your generosity! Your donation will reach those who need
+        it most.
+      </div>
+
+      <div class="form-card">
+        <h2>Submit Your Donation</h2>
+        <form id="donorForm">
+          <div class="input-group">
+            <label for="name">Donor Name</label>
+            <input type="text" id="name" required />
+          </div>
+
+          <div class="input-group">
+            <label for="location">Location</label>
+            <input
+              type="text"
+              id="location"
+              placeholder="Enter your location"
+              required
+            />
+            <button type="button" onclick="getLocation()">
+              📍 Use My Current Location
+            </button>
+            <div id="status"></div>
+          </div>
+
+          <div class="input-group">
+            <label for="foodAmount"
+              >Estimated Food Amount (Ex:number of people can be fed)</label
+            >
+            <input
+              type="number"
+              id="foodAmount"
+              placeholder="Number of servings"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="details">Additional Details</label>
+            <textarea
+              id="details"
+              placeholder="Type details about food..."
+            ></textarea>
+          </div>
+
+          <button type="submit">Submit Donation</button>
+        </form>
+      </div>
+
+      <p class="footer-note">Together, we can reduce waste and end hunger.</p>
+    </div>
+    <script>
+      document
+        .getElementById("donorForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const donor = {
+            name: document.getElementById("name").value,
+            location: document.getElementById("location").value,
+            foodAmount: document.getElementById("foodAmount").value,
+            details: document.getElementById("details").value,
+            timestamp: new Date().toISOString(),
+          };
+          let suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+          suppliers.unshift(donor);
+          suppliers = suppliers.slice(0, 5);
+          localStorage.setItem("suppliers", JSON.stringify(suppliers));
+
+          // Alert NGO (for now via localStorage flag)
+          localStorage.setItem("newSupplierAlert", JSON.stringify(donor));
+
+          submitted();
+        });
+      function submitted() {
+        alert("Your Donation Is Marked.");
+        alert(
+          "The food will be collected in " +
+            Math.floor(Math.random() * 30 + 1) +
+            " minutes. Thankyou...."
+        );
+      }
+      function getLocation() {
+        const status = document.getElementById("status");
+        const coordinatesField = document.getElementById("location");
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+
+              const combinedText = `Latitude: ${latitude}, Longitude: ${longitude}`;
+              coordinatesField.value = combinedText;
+
+              status.textContent = "Location fetched successfully!";
+              status.className = "success";
+            },
+            (error) => {
+              status.textContent = "Error getting location: " + error.message;
+              status.className = "error";
+            }
+          );
+        } else {
+          status.textContent = "Geolocation is not supported by this browser.";
+          status.className = "error";
+        }
+      }
+    </script>
+  </body>
+</html>

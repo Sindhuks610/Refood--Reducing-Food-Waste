@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NGO Dashboard</title>
+    <link href="./Dashboard.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>NGO Food Request</h1>
+      <p class="quote">
+        "Trust is built when actions meet words. Together, we can serve
+        humanity."
+      </p>
+
+      <div id="thankYouMessage" class="thank-you">
+        Your request has been submitted. Thank you for helping us connect
+        resources to those in need!
+      </div>
+
+      <div class="form-card">
+        <h2>Request Food & Build Trust</h2>
+        <form id="ngoForm" enctype="multipart/form-data">
+          <div class="input-group">
+            <label for="ngoName">NGO Name</label>
+            <input type="text" id="ngoName" name="ngoName" required />
+          </div>
+
+          <div class="input-group">
+            <label for="peopleCount">Number of People to Serve</label>
+            <input type="number" id="peopleCount" name="peopleCount" required />
+          </div>
+
+          <div class="input-group">
+            <label for="location">Location</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              placeholder="Enter your location"
+              required
+            />
+            <button type="button" onclick="getLocation()">
+              📍 Use My Current Location
+            </button>
+            <div id="status"></div>
+          </div>
+
+          <div class="input-group">
+            <label for="photos">Upload NGO Verification Photos</label>
+            <input
+              type="file"
+              id="photos"
+              name="photos"
+              accept="image/*"
+              multiple
+              required
+            />
+          </div>
+
+          <div id="preview"></div>
+
+          <button type="submit">Submit Request</button>
+        </form>
+      </div>
+
+      <p class="footer-note">
+        Your transparency builds hope. Together, we can create a hunger-free
+        world.
+      </p>
+    </div>
+    <script>
+      window.addEventListener("load", function () {
+        if (localStorage.getItem("ngoProfile")) {
+          // Already logged in, go directly to dashboard
+          window.location.href = "NewNGODashboard.html";
+        }
+      });
+
+      document
+        .getElementById("ngoForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const ngo = {
+            name: document.getElementById("ngoName").value,
+            peopleCount: document.getElementById("peopleCount").value,
+            location: document.getElementById("location").value,
+            timestamp: new Date().toISOString(),
+          };
+
+          // Save NGO details
+          localStorage.setItem("ngoProfile", JSON.stringify(ngo));
+
+          // Check for available food
+          let suppliers = JSON.parse(localStorage.getItem("suppliers")) || [];
+          if (suppliers.length > 0) {
+            alert("Newly available food donations have been found for you!");
+          } else {
+            alert("Welcome! We'll notify you when food is available.");
+          }
+
+          // Redirect to dashboard
+          window.location.href = "NewNGODashboard.html";
+        });
+
+      document.getElementById("photos").addEventListener("change", function () {
+        const preview = document.getElementById("preview");
+        preview.innerHTML = "";
+        for (const file of this.files) {
+          const img = document.createElement("img");
+          img.src = URL.createObjectURL(file);
+          preview.appendChild(img);
+        }
+      });
+
+      function getLocation() {
+        const status = document.getElementById("status");
+        const coordinatesField = document.getElementById("location");
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+
+              const combinedText = `Latitude: ${latitude}, Longitude: ${longitude}`;
+              coordinatesField.value = combinedText;
+
+              status.textContent = "Location fetched successfully!";
+              status.className = "success";
+            },
+            (error) => {
+              status.textContent = "Error getting location: " + error.message;
+              status.className = "error";
+            }
+          );
+        } else {
+          status.textContent = "Geolocation is not supported by this browser.";
+          status.className = "error";
+        }
+      }
+    </script>
+  </body>
+</html>

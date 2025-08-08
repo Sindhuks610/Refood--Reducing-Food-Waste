@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReFood - Reducing Food Waste</title>
+    <link href="./styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <div class="logo-title">
+        <img
+          src="https://i0.wp.com/epthinktank.eu/wp-content/uploads/2024/08/EPRS-Briefing-698894-SDG2-zero-hunger-progress-FINAL.png?fit=1024%2C1024&ssl=1&w=640"
+          alt="ReFood Logo"
+          class="logo"
+        />
+        <h1>ReFood</h1>
+      </div>
+      <p>Connecting Communities to Reduce Food Waste</p>
+    </header>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#login">Login</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <section class="hero">
+      <h2>Give Food a Second Chance</h2>
+      <video width="500" height="240" autoplay muted loop>
+        <source src="./3627916303-preview.mp4" type="video/mp4" />
+      </video>
+      <p>Join us in reducing food waste and supporting communities.</p>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About Us</h2>
+      <p>
+        ReFood connects food donors with organizations and individuals in need,
+        building a sustainable ecosystem to minimize food waste and combat
+        hunger.
+      </p>
+    </section>
+
+    <section id="how-it-works" class="work section">
+      <
+      <h2>How It Works</h2>
+      <ol>
+        <li>Donors list surplus food items.</li>
+        <li>Non-profits and individuals browse available food.</li>
+        <li>Pickup or delivery is arranged directly.</li>
+      </ol>
+      <ul>
+        <li><b>Donors:</b></li>
+        <ol>
+          <li>Login by providing basic essential credentials</li>
+          <li>provide your Location</li>
+          <li>Provide an estimated amount of food</li>
+          <li>
+            You're Ready to Go. We would provide you the Estimated amount of
+            time for the collection of food.
+          </li>
+          <li>Thank you for Donating.</li>
+        </ol>
+        <br />
+        <li><b>NGO/Non profit organizations:</b></li>
+        <ol>
+          <li>Login by providing basic essential credentials</li>
+          <li>
+            Kindly Share the location,number of people and appropriate photos
+            for validation.
+          </li>
+          <li>Welcome to the family.</li>
+          <li>We would alert the availability of food.</li>
+          <li>
+            On request, We would deliver the quality food within some estimated
+            time
+          </li>
+          <li>Thank You.</li>
+        </ol>
+      </ul>
+      <footer>
+        Providing quality food is our responsibility; achieving zero hunger is
+        our mission.
+      </footer>
+    </section>
+
+    <section id="login" class="section">
+      <h2>Supplier/NGO Login</h2>
+      <form class="login-form">
+        <input type="text" placeholder="Username or Email" required />
+        <input type="password" placeholder="Password" required />
+        <select required id="userInput">
+          <option>Select Role</option>
+          <option value="Supplier">Supplier</option>
+          <option value="NGO">NGO</option>
+        </select>
+        <button type="submit" id="myForm">Login</button>
+      </form>
+    </section>
+
+    <section class="animation">
+      <video width="500" height="240" autoplay muted loop>
+        <source src="./3542330985-preview.mp4" type="video/mp4" />
+      </video>
+      <h2>Thank You for Supporting Lives</h2>
+      <div class="quote">
+        "The best way to find yourself is to lose yourself in the service of
+        others." — Mahatma Gandhi
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact Us</h2>
+      <p>Email: contact@refood.org</p>
+      <p>Phone: +123-456-7890</p>
+    </section>
+    <footer>&copy; 2025 ReFood. All rights reserved.</footer>
+    <script>
+      document
+        .querySelector(".login-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const input = document.getElementById("userInput").value.trim();
+
+          // Decide based on input
+          if (input === "Supplier") {
+            window.location.href = "Supplier.html";
+            alert("successfully logged in");
+          } else if (input === "NGO") {
+            window.location.href = "NGO.html";
+            alert("successfully logged in");
+          } else {
+            alert("Please select a valid role");
+          }
+        });
+    </script>
+  </body>
+</html>
